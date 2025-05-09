@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gerador de Senhas FC</title>
+
+  <style>
+    body {
+      background: url('fundo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.75);
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 20px lime;
+    }
+
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 20px;
+    }
+
+    .bola {
+      width: 80px;
+      margin-bottom: 15px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    #placar {
+      background: #004d00;
+      border: 3px solid lime;
+      padding: 20px;
+      border-radius: 10px;
+      font-size: 1.6em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .time {
+      font-weight: bold;
+      width: 20%;
+    }
+
+    .senha {
+      width: 60%;
+      background: #111;
+      border-radius: 5px;
+      padding: 10px;
+      color: yellow;
+      font-family: 'Courier New', monospace;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 1em;
+      background: limegreen;
+      border: none;
+      color: #000;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: yellow;
+      color: black;
+    }
+
+    #narrador {
+      margin-top: 15px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🏆 Gerador de Senhas FC 🏆</h1>
+    <img src="bola.png" alt="Bola de futebol" class="bola"/>
+    
+    <div id="placar">
+      <span class="time">Você</span>
+      <span class="senha" id="senha">⚽ Aguarde o apito... ⚽</span>
+      <span class="time">Senha</span>
+    </div>
+
+    <button onclick="gerarSenha()">🔁 Chutar nova senha</button>
+    
+    <p id="narrador">Narrador: Preparando a jogada...</p>
+  </div>
+  
+  <audio id="whistle" src="whistle.mp3"></audio>
+  <audio id="cheer" src="cheer.mp3"></audio>
+
+  <script>
+    const narrador = document.getElementById('narrador');
+    const senhaEl = document.getElementById('senha');
+    const apito = document.getElementById('whistle');
+    const torcida = document.getElementById('cheer');
+
+    function gerarSenha() {
+      const letras = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const numeros = '0123456789';
+      const simbolos = '!@#$%&*()-_=+<>?';
+      const todos = letras + numeros + simbolos;
+
+      let senha = '';
+      for (let i = 0; i < 16; i++) {
+        senha += todos[Math.floor(Math.random() * todos.length)];
+      }
+
+      narrador.textContent = 'Narrador: Ele corre, mira... e CHUTA!';
+      senhaEl.textContent = '⏳ Carregando...';
+
+      apito.play();
+
+      setTimeout(() => {
+        senhaEl.textContent = senha;
+        torcida.play();
+        narrador.textContent = `Narrador: GOLAÇO! Senha criada com sucesso!`;
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
